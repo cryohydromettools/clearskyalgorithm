@@ -271,7 +271,7 @@ for k=1:length(years_total)
               hold off
               ylabel('340 Irradiance (W m^{-2} nm^{-1})','FontSize', 12)
               xlabel('Local time','FontSize', 12)
-              graf=(['print -djpeg ',dir_graph,'globalSW','_',...
+              graf=(['print -dpng -r300 ',dir_graph,'irra_340','_',...
                                      num2str(years_total(k)),'_',...
                                      num2str(i),'_',num2str(j)]);
               eval(graf);
@@ -391,7 +391,7 @@ dlmwrite(str_total_out,data_clear_select_min,'delimiter',' ','precision','%.3f')
 
 
 for i=1:length(zenith_day_clear_min)
-  if ( zenith_day_clear_min(i) <= 85.0)
+  if ( zenith_day_clear_min(i) <= 88.0)
       irra_340_normal(i) = irra_340_day_clear_min(i)/(cos(pi*zenith_day_clear_min(i)/180)^bcoef);
   else 
       irra_340_normal(i) = NaN;
@@ -406,7 +406,7 @@ zenith_day_clear_min_mean = nanmean(reshape(zenith_day_clear_min,[1440,length(ze
 
 threshold_max = nanmax(irra_340_normal_mean);
 threshold_min = nanmin(irra_340_normal_mean);
-threshold_min_78 = threshold_min - 0.10*threshold_min;
+threshold_min_78 = threshold_min - 0.05*threshold_min;
 threshold_max_v  = linspace(threshold_max,threshold_max,1440);
 threshold_min_v  = linspace(threshold_min,threshold_min,1440);
 
@@ -437,11 +437,11 @@ grid on
 ylabel('340 Irradiance (W m^{-2} nm^{-1})','FontSize', 12)
 xlabel('Local time','FontSize', 12)
 box on
-graf=(['print -djpeg ',dir_graph,'irra_clear_sky_mean']);
+graf=(['print -dpng -r300 ',dir_graph,'irra_clear_sky_mean']);
 eval(graf);
 
 %% %%%%%%%%%%%%%%%%%  save thresholds  %%%%%%%%%%%%%%%%%%%%% %%
 
-firt_thresholds = [threshold_max;threshold_min;threshold_min - 0.10*threshold_min];
+firt_thresholds = [threshold_max;threshold_min;threshold_min_78];
 str_total_out = [dir_out,filename_out_thres];
 dlmwrite(str_total_out,firt_thresholds,'delimiter',' ','precision','%.3f');
