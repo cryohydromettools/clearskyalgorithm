@@ -6,11 +6,12 @@ close all
 
 %%  --------------         dir work          --------------  %%     
 
-dir_out      = ['data/output/'];
-dir_graph    = ['graphics/']; 
-dir_in       = ['data/input/'];
-filename_in  = ['data_uv_340nm.txt'];
-filename_out = ['data_uv_340nm_cs_d.txt'];
+dir_out            = ['data/output/'];
+dir_graph          = ['graphics/']; 
+dir_in             = ['data/input/'];
+filename_in        = ['data_uv_340nm.txt'];
+filename_out       = ['data_uv_340nm_cs_d.txt'];
+filename_out_thres = ['firt_thres.txt'];
 
 %%  --------------  input year and location  --------------  %%     
 
@@ -25,6 +26,7 @@ zone_s      = -5;
 rsquare_in = 0.985;
 rmse_in    = 0.04;
 len_in     = 650;
+bcoef = 1.30;
 
 %%  --------------        read data          --------------  %%     
 
@@ -249,12 +251,17 @@ for k=1:length(years_total)
                     cont_clear = cont_clear + 1; 
                   end
                end
-
-
-              figure('visible','off')
+               
+               
+              figure1 = figure('Color',[1 1 1], 'visible','off');
+              x0 = 10; y0 = 10;
+              width  = 250;
+              height = 240;
+              set(gcf,'PaperPositionMode','auto');
+              set(figure1,'units','points','position',[x0,y0,width,height]);
               plot(hour_f,Io_f,'k-','LineWidth',1.5);
               axis([5 19 0 1.2]);
-              set(gca,'XTick',(5:1:19),'FontSize', 12);
+              set(gca,'XTick',(5:2:19),'FontSize', 12);
               set(gca,'YTick',(0:0.20:1.2),'FontSize', 12); 
               grid on
               hold on
@@ -262,6 +269,8 @@ for k=1:length(years_total)
               plot(hour_f,A2,'r-','LineWidth',1.0);
               plot(hour_f,A3,'g-','LineWidth',0.5);
               hold off
+              ylabel('340 Irradiance (W m^{-2} nm^{-1})','FontSize', 12)
+              xlabel('Local time','FontSize', 12)
               graf=(['print -djpeg ',dir_graph,'globalSW','_',...
                                      num2str(years_total(k)),'_',...
                                      num2str(i),'_',num2str(j)]);
@@ -378,4 +387,61 @@ data_clear_select_min = [year_day_clear_min,month_day_clear_min,...
 str_total_out = [dir_out,filename_out];
 dlmwrite(str_total_out,data_clear_select_min,'delimiter',' ','precision','%.3f');
 
+%% %%%%%%%%%%%%%%%%%  calculate normal irradiance  %%%%%%%%%%%%%%%%%%%%% %%
 
+
+for i=1:length(zenith_day_clear_min)
+  if ( zenith_day_clear_min(i) <= 85.0)
+      irra_340_normal(i) = irra_340_day_clear_min(i)/(cos(pi*zenith_day_clear_min(i)/180)^bcoef);
+  else 
+      irra_340_normal(i) = NaN;
+  end
+end
+%% %%%%%%%%%%%%%%%%%       finding thresholds      %%%%%%%%%%%%%%%%%%%%% %%
+
+hour_cont =  hour_day_clear_min + min_day_clear_min./60.0 + seg_day_clear_min./3600;
+irra_340_normal_mean = nanmean(reshape(irra_340_normal,[1440,length(irra_340_normal)/1440]),2);
+irra_340_day_clear_mean = nanmean(reshape(irra_340_day_clear_min,[1440,length(irra_340_day_clear_min)/1440]),2);
+zenith_day_clear_min_mean = nanmean(reshape(zenith_day_clear_min,[1440,length(zenith_day_clear_min)/1440]),2);
+
+threshold_max = nanmax(irra_340_normal_mean);
+threshold_min = nanmin(irra_340_normal_mean);
+threshold_min_78 = threshold_min - 0.10*threshold_min;
+threshold_max_v  = linspace(threshold_max,threshold_max,1440);
+threshold_min_v  = linspace(threshold_min,threshold_min,1440);
+
+for i=1:length(zenith_day_clear_min_mean)
+  if ( zenith_day_clear_min_mean(i) <= 78.5)
+      threshold_min_v(i) = threshold_min;
+  else 
+      threshold_min_v(i) = threshold_min_78;
+  end
+end
+
+figure1 = figure('Color',[1 1 1], 'visible','off');
+x0 = 10; y0 = 10;
+width  = 250;
+height = 240;
+set(gcf,'PaperPositionMode','auto');
+set(figure1,'units','points','position',[x0,y0,width,height]);
+hold on
+plot(hour_cont(1:1440),irra_340_day_clear_mean,'b-','LineWidth',1.0);
+plot(hour_cont(1:1440),irra_340_normal_mean,'r-','LineWidth',1.0);
+plot(hour_cont(1:1440),threshold_max_v,'k-','LineWidth',1.0);
+plot(hour_cont(1:1440),threshold_min_v,'k-','LineWidth',1.0);
+hold off
+axis([0 23 0 1.2]);
+set(gca,'XTick',(0:3:23),'FontSize', 12);
+set(gca,'YTick',(0:0.20:1.2),'FontSize', 12); 
+grid on
+ylabel('340 Irradiance (W m^{-2} nm^{-1})','FontSize', 12)
+xlabel('Local time','FontSize', 12)
+box on
+graf=(['print -djpeg ',dir_graph,'irra_clear_sky_mean']);
+eval(graf);
+
+%% %%%%%%%%%%%%%%%%%  save thresholds  %%%%%%%%%%%%%%%%%%%%% %%
+
+firt_thresholds = [threshold_max;threshold_min;threshold_min - 0.10*threshold_min];
+str_total_out = [dir_out,filename_out_thres];
+dlmwrite(str_total_out,firt_thresholds,'delimiter',' ','precision','%.3f');
