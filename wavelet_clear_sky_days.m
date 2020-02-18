@@ -26,7 +26,7 @@ zone_s      = -5;
 rsquare_in = 0.985;
 rmse_in    = 0.04;
 len_in     = 650;
-bcoef = 1.30;
+bcoef      = 1.43;
 
 %%  --------------        read data          --------------  %%     
 
@@ -391,7 +391,7 @@ dlmwrite(str_total_out,data_clear_select_min,'delimiter',' ','precision','%.3f')
 
 
 for i=1:length(zenith_day_clear_min)
-  if ( zenith_day_clear_min(i) <= 88.0)
+  if ( zenith_day_clear_min(i) <= 85.0)
       irra_340_normal(i) = irra_340_day_clear_min(i)/(cos(pi*zenith_day_clear_min(i)/180)^bcoef);
   else 
       irra_340_normal(i) = NaN;
