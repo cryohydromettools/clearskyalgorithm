@@ -1,15 +1,31 @@
 %%  --------------  claer sky day algorithm  --------------  %%     
 
-
 clc
 clear all
 close all
 
 %%  --------------         dir work          --------------  %%     
+
 dir_out      = ['data/output/'];
 dir_graph    = ['graphics/']; 
 dir_in       = ['data/input/'];
 filename_in  = ['data_uv_340nm.txt'];
+filename_out = ['data_uv_340nm_cs_d.txt'];
+
+%%  --------------  input year and location  --------------  %%     
+
+years_total = [2018,2019,2020];
+lon_s       = -75.30;
+lat_s       = -12.04;
+elv_s       = 3314.0;
+zone_s      = -5;
+
+%%  --------------  input conditions select day  --------------  %%     
+
+rsquare_in = 0.985;
+rmse_in    = 0.04;
+len_in     = 650;
+
 %%  --------------        read data          --------------  %%     
 
 str_total_dat = [dir_in,filename_in];
@@ -41,26 +57,23 @@ time.sec   = seg_input(i);
 time.UTC   = zone_s; 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 sun = sun_position(time, location);
-zenith_input(i) = sun.zenith;
+zenith_input1(i) = sun.zenith;
 end
-
-%% %%%%%% Input data must be in column  %%%%%%%%%%%%%%%%%%%%%%%
+zenith_input = zenith_input1';
+%% %%%%%%%%%%%%%%%%% Input data must be in column  %%%%%%%%%%%%%%%%%%%%% %%
 decimalyear = datenum([year_input,month_input,day_input,...
                        hour_input,min_input,seg_input]);
 hour_cont = hour_input' + min_input'./60.0 + seg_input'./3600;   
-
-years_total = [2018,2019,2020];
 
 days_month = [31,29,31,30,31,30,31,31,30,31,30,31];
 months = {'January','February','March','April','May','June',...
           'July','August','September','October','November',...
           'December'};
-
 for k=1:length(years_total)
                    
  for i=1:length(days_month)
 
-  for j=1:days_month(i) %day
+  for j=1:days_month(i)
        
    index_day = find(year_input == years_total(k) & month_input == i & day_input == j);
    
@@ -74,21 +87,13 @@ for k=1:length(years_total)
       hour_day{k,i,j}  = hour_input(index_day);
       min_day{k,i,j}   = min_input(index_day);
       seg_day{k,i,j}   = seg_input(index_day);
-      
       hour_cont_day{k,i,j} = hour_cont(index_day);
-      %%%%%
-      irra_305_day{k,i,j}  = irra_305(index_day);
-      irra_320_day{k,i,j}  = irra_320(index_day);
       irra_340_day{k,i,j}  = irra_340(index_day);
-      irra_380_day{k,i,j}  = irra_380(index_day);
-      %%%
-  
   end
  end
 end
 
-%%
-%%%%%%%%%%%%%%%%%%%%%%%
+%% %%%%%%%%%%%%%%%%%  clear sky conditions days  %%%%%%%%%%%%%%%%%%%%% %%
 
 year_day_clear_min  = [];
 month_day_clear_min = [];
@@ -96,36 +101,31 @@ day_day_clear_min   = [];
 hour_day_clear_min  = [];
 min_day_clear_min   = [];
 seg_day_clear_min   = [];
-global_SW_day_clear_min  = [];
-direct_SW_day_clear_min  = [];
-diffus_SW_day_clear_min  = [];
-reflec_SW_day_clear_min  = [];
-emited_LW_day_clear_min  = [];
-incide_LW_day_clear_min  = [];
+irra_340_day_clear_min  = [];
 zenith_day_clear_min     = [];
       
-years_total = [2018,2019,2020];
 days_month = [31,29,31,30,31,30,31,31,30,31,30,31];
 months = {'January','February','March','April','May','June',...
           'July','August','September','October','November',...
           'December'};
-%%
+      
+% loop day
 
 for k=1:length(years_total)
                    
  for i=1:length(days_month)
 
-  for j=1:days_month(i) %day
+  for j=1:days_month(i)
       
       if ( ~isnan(irra_340_day{k,i,j}) ) 
- 
-  %%%% Set global irradiance as input      
+
+  %%%% Set global irradiance as input %%%%     
      Io = irra_340_day{k,i,j};
      zen_ang   = zenith_day{k,i,j};
      hour_cont = hour_cont_day{k,i,j};
      N_tot = length(Io);
   
-  %%% Initialize vectors   
+  %%% Initialize vectors %%%  
      Io_f = zeros(1,N_tot);
      hour_f = zeros(1,N_tot);
      
@@ -141,16 +141,16 @@ for k=1:length(years_total)
        
      end
      
-     %----------  Remove NAN from vectors ----------
+     %----------  Remove NAN from vectors ----------%
      Io_f(isnan(Io_f))     = [];
      hour_f(isnan(hour_f)) = [];
      
      % Fit to a gaussian curve
      [curve2,gof2] = fit(hour_f',Io_f','gauss1');
      
-         %------ Condition to select clear sky days -------
+         %------ Condition to select clear sky days -------%
     
-      if ( gof2.rsquare >= 0.98 && gof2.rmse < 3.8  && length(Io_f) > 650 )
+      if ( gof2.rsquare >= rsquare_in && gof2.rmse < rmse_in  && length(Io_f) > len_in )
          irra_340_clear{k,i,j}  = irra_340_day{k,i,j}; 
          year_clear{k,i,j}      = year_day{k,i,j}; 
          month_clear{k,i,j}     = month_day{k,i,j}; 
@@ -165,7 +165,7 @@ for k=1:length(years_total)
       
              if ( ~isnan(irra_340_clear{k,i,j}) )
 
-                   %---- Level of decomposition --------
+              %---- Level of decomposition --------%
               des_lev = 3;
 
               [C,L] = wavedec(Io_f,des_lev,'dmey');
@@ -179,7 +179,7 @@ for k=1:length(years_total)
                D2 = wrcoef('d',C,L,'dmey',2);
                D3 = wrcoef('d',C,L,'dmey',3);
 
-               %%%%%%% Compute the initial standard deviation %%%%%%%%%%%%%%
+               %%%%%%% Compute the initial standard deviation %%%%%%%%%%%%
 
                std_wo = nanstd(Io_f-A3);
                thres = 10^-6;
@@ -188,7 +188,7 @@ for k=1:length(years_total)
 
                while (coef_eval > thres)
 
-               %---- Keep the value of old std---
+               %---- Keep the value of old std---%
                 std_wo_old = std_wo;
                 cont_sig1 = 0.0;
                 cont_sig2 = 0.0;
@@ -201,7 +201,7 @@ for k=1:length(years_total)
                 M_f3  = zeros(1,N_total);
                 I_int = zeros(1,N_total);
 
-                %%%%%%%% Calculation of multiresolution support %%%%%%%%%%%%%%
+                %%%%%%%% Calculation of multiresolution support %%%%%%%%%%
                  for yi=1:N_total
 
                    if ( abs(D1(yi)) > 3.5*std_wo ) 
@@ -250,25 +250,12 @@ for k=1:length(years_total)
                   end
                end
 
-              figure('visible','off')
-              plot(hour_f,abs(D3),'ro');
-              axis([5 19 0 6*std_wo]);
-              set(gca,'XTick',(5:2:19),'FontSize', 12);
-              set(gca,'YTick',(0:std_wo:6*std_wo),'FontSize', 12); 
-              grid on
-              hold on
-              refline(0,3.5*std_wo);
-              hold off
-              graf=(['print -djpeg ',dir_graph,'detail_std','_',...
-                                     num2str(years_total(k)),'_',...
-                                     num2str(i),'_',num2str(j)]);
-              eval(graf);
 
               figure('visible','off')
               plot(hour_f,Io_f,'k-','LineWidth',1.5);
-              axis([5 19 0 200]);
+              axis([5 19 0 1.2]);
               set(gca,'XTick',(5:1:19),'FontSize', 12);
-              set(gca,'YTick',(0:20:200),'FontSize', 12); 
+              set(gca,'YTick',(0:0.20:1.2),'FontSize', 12); 
               grid on
               hold on
               plot(hour_f,A1,'b-','LineWidth',1.0);
@@ -280,7 +267,7 @@ for k=1:length(years_total)
                                      num2str(i),'_',num2str(j)]);
               eval(graf);
 
-            %------ Final Condition to select clear sky days -------
+            %------ Final Condition to select clear sky days -------%
 
                if ( 3.5*std_wo > max(abs(D3)) )
                  irra_340_clear_final{k,i,j} = irra_340_clear{k,i,j}; 
@@ -289,11 +276,10 @@ for k=1:length(years_total)
 
                else
                  irra_340_clear_final{k,i,j} = NaN; 
-            %      name=['Non clear sky day',':',num2str(i),'-',num2str(j)];
-            %     disp(name);
+
                end
 
-            %-------- Fill empty values with NaN -------------      
+            %-------- Fill empty values with NaN -------------%      
                ix=cellfun(@isempty,irra_340_clear);
                irra_340_clear(ix)={NaN};
 
@@ -317,120 +303,79 @@ for k=1:length(years_total)
 
                ix=cellfun(@isempty,seg_clear);
                seg_clear(ix)={NaN};
+               
+             %------ Save data one minutes -------%     
+
+                 year_day_clear_min1  = year_day{k,i,j};
+                 month_day_clear_min1 = month_day{k,i,j};
+                 day_day_clear_min1   = day_day{k,i,j};
+                 hour_day_clear_min1  = hour_day{k,i,j};
+                 min_day_clear_min1   = min_day{k,i,j};
+                 seg_day_clear_min1   = seg_day{k,i,j};
+                 irra_340_day_clear_min1  = irra_340_day{k,i,j};
+                 zenith_day_clear_min1     = zenith_day{k,i,j};   
+
+                if length(year_day_clear_min1)~= 1440
+
+                    start_time = datenum([year_day_clear_min1(1),month_day_clear_min1(1),...
+                                  day_day_clear_min1(1),0,0,0]);
+
+                    end_time   = datenum([year_day_clear_min1(1),month_day_clear_min1(1),...
+                                  day_day_clear_min1(1),23,59,0]);
+
+                    total_time1 = linspace(start_time,end_time,1440)';    
+
+                    start_time = int64(round(datenum([year_day_clear_min1(1),month_day_clear_min1(1),...
+                                  day_day_clear_min1(1),0,0,0])*24*60));
+
+                    end_time   = int64(round(datenum([year_day_clear_min1(1),month_day_clear_min1(1),...
+                                  day_day_clear_min1(1),23,59,0])*24*60));
+
+                    total_time = (start_time:1:end_time)';    
+
+                    data_time  = int64(round(datenum([year_day_clear_min1,month_day_clear_min1,...
+                                  day_day_clear_min1,hour_day_clear_min1,min_day_clear_min1,...
+                                      seg_day_clear_min1])*24*60));
+
+                    Vector3 = table([total_time],'VariableNames',{'data_time'});
+
+                    Vector4 = table([data_time],[irra_340_day_clear_min1],...
+                                    [zenith_day_clear_min1]);
+
+                    Data = outerjoin(Vector3,Vector4,'Type','left');
+                    [~,idx] = unique(Data(:,1));
+                    Data = Data(idx,:);
+
+                    [year_day_clear_min1,month_day_clear_min1,day_day_clear_min1,...
+                     hour_day_clear_min1,min_day_clear_min1,seg_day_clear_min1] = datevec(total_time1);
+                     irra_340_day_clear_min1  = Data.irra_340_day_clear_min1;
+                     zenith_day_clear_min1     = Data.zenith_day_clear_min1;
+
+                end
+
+                 year_day_clear_min  = [year_day_clear_min;year_day_clear_min1];
+                 month_day_clear_min = [month_day_clear_min;month_day_clear_min1];
+                 day_day_clear_min   = [day_day_clear_min;day_day_clear_min1];
+                 hour_day_clear_min  = [hour_day_clear_min;hour_day_clear_min1];
+                 min_day_clear_min   = [min_day_clear_min;min_day_clear_min1];
+                 seg_day_clear_min   = [seg_day_clear_min;seg_day_clear_min1];
+                 irra_340_day_clear_min  = [irra_340_day_clear_min;irra_340_day_clear_min1];
+                 zenith_day_clear_min     = [zenith_day_clear_min;zenith_day_clear_min1];   
+
              end
         end
       end
   end
  end
 end
-%%
-       %-------------------------------------------------%   
-         %------ Save data one minutes -------%     
-
-     year_day_clear_min1  = year_day{k,i,j};
-     month_day_clear_min1 = month_day{k,i,j};
-     day_day_clear_min1   = day_day{k,i,j};
-     hour_day_clear_min1  = hour_day{k,i,j};
-     min_day_clear_min1   = min_day{k,i,j};
-     seg_day_clear_min1   = seg_day{k,i,j};
-     global_SW_day_clear_min1  = global_SW_day{k,i,j};
-     direct_SW_day_clear_min1  = direct_SW_day{k,i,j};
-     diffus_SW_day_clear_min1  = diffus_SW_day{k,i,j};
-     reflec_SW_day_clear_min1  = reflec_SW_day{k,i,j};
-     emited_LW_day_clear_min1  = emited_LW_day{k,i,j};
-     incide_LW_day_clear_min1  = incide_LW_day{k,i,j};
-     zenith_day_clear_min1     = zenith_day{k,i,j};   
-   
-    if length(year_day_clear_min1)~= 1440
-    
-        start_time = datenum([year_day_clear_min1(1),month_day_clear_min1(1),...
-                      day_day_clear_min1(1),0,0,0]);
-
-        end_time   = datenum([year_day_clear_min1(1),month_day_clear_min1(1),...
-                      day_day_clear_min1(1),23,59,0]);
-
-        total_time1 = linspace(start_time,end_time,1440)';    
-
-        start_time = int64(round(datenum([year_day_clear_min1(1),month_day_clear_min1(1),...
-                      day_day_clear_min1(1),0,0,0])*24*60));
-
-        end_time   = int64(round(datenum([year_day_clear_min1(1),month_day_clear_min1(1),...
-                      day_day_clear_min1(1),23,59,0])*24*60));
-
-        total_time = (start_time:1:end_time)';    
-
-        data_time  = int64(round(datenum([year_day_clear_min1,month_day_clear_min1,...
-                      day_day_clear_min1,hour_day_clear_min1,min_day_clear_min1,...
-                          seg_day_clear_min1])*24*60));
-
-        Vector3 = table([total_time],'VariableNames',{'data_time'});
-
-        Vector4 = table([data_time],[global_SW_day_clear_min1],...
-                        [direct_SW_day_clear_min1],[diffus_SW_day_clear_min1],...
-                        [reflec_SW_day_clear_min1],[emited_LW_day_clear_min1],...
-                        [incide_LW_day_clear_min1],[zenith_day_clear_min1]);
-         
-        Data = outerjoin(Vector3,Vector4,'Type','left');
-        [~,idx] = unique(Data(:,1));
-        Data = Data(idx,:);
-
-        [year_day_clear_min1,month_day_clear_min1,day_day_clear_min1,...
-         hour_day_clear_min1,min_day_clear_min1,seg_day_clear_min1] = datevec(total_time1);
-         global_SW_day_clear_min1  = Data.global_SW_day_clear_min1;
-         direct_SW_day_clear_min1  = Data.direct_SW_day_clear_min1;
-         diffus_SW_day_clear_min1  = Data.diffus_SW_day_clear_min1;
-         reflec_SW_day_clear_min1  = Data.reflec_SW_day_clear_min1;
-         emited_LW_day_clear_min1  = Data.emited_LW_day_clear_min1;
-         incide_LW_day_clear_min1  = Data.incide_LW_day_clear_min1;
-         zenith_day_clear_min1     = Data.zenith_day_clear_min1;
-         
-    end
-     global_SW_day_clear_min1(global_SW_day_clear_min1<0)  = 0;
-     direct_SW_day_clear_min1(direct_SW_day_clear_min1<0)  = 0;
-     diffus_SW_day_clear_min1(diffus_SW_day_clear_min1<0)  = 0;
-     reflec_SW_day_clear_min1(reflec_SW_day_clear_min1<0)  = 0;
-     emited_LW_day_clear_min1(emited_LW_day_clear_min1<0)  = 0;
-     incide_LW_day_clear_min1(incide_LW_day_clear_min1<0)  = 0;
-     
-     year_day_clear_min  = [year_day_clear_min;year_day_clear_min1];
-     month_day_clear_min = [month_day_clear_min;month_day_clear_min1];
-     day_day_clear_min   = [day_day_clear_min;day_day_clear_min1];
-     hour_day_clear_min  = [hour_day_clear_min;hour_day_clear_min1];
-     min_day_clear_min   = [min_day_clear_min;min_day_clear_min1];
-     seg_day_clear_min   = [seg_day_clear_min;seg_day_clear_min1];
-     global_SW_day_clear_min  = [global_SW_day_clear_min;global_SW_day_clear_min1];
-     direct_SW_day_clear_min  = [direct_SW_day_clear_min;direct_SW_day_clear_min1];
-     diffus_SW_day_clear_min  = [diffus_SW_day_clear_min;diffus_SW_day_clear_min1];
-     reflec_SW_day_clear_min  = [reflec_SW_day_clear_min;reflec_SW_day_clear_min1];
-     emited_LW_day_clear_min  = [emited_LW_day_clear_min;emited_LW_day_clear_min1];
-     incide_LW_day_clear_min  = [incide_LW_day_clear_min;incide_LW_day_clear_min1];
-     zenith_day_clear_min     = [zenith_day_clear_min;zenith_day_clear_min1];   
-     
-     
-     end
-     
-        end
-    
-  end
- end
-end
-
-
 %% save data days clear sky
 
 data_clear_select_min = [year_day_clear_min,month_day_clear_min,...
                          day_day_clear_min,hour_day_clear_min,...
                          min_day_clear_min,seg_day_clear_min,...
-                         global_SW_day_clear_min,direct_SW_day_clear_min,...
-                         diffus_SW_day_clear_min,reflec_SW_day_clear_min,...
-                         emited_LW_day_clear_min,incide_LW_day_clear_min,...
-                         zenith_day_clear_min];
+                         irra_340_day_clear_min,zenith_day_clear_min];
 
-dir_out  = 'output/';
-filename = 'input_data_claer_sky_sbdart.dat';
-
-str_total = [dir_out,filename];
-
-dlmwrite(str_total,data_clear_select_min,'delimiter',' ','precision','%.3f');
+str_total_out = [dir_out,filename_out];
+dlmwrite(str_total_out,data_clear_select_min,'delimiter',' ','precision','%.3f');
 
 
