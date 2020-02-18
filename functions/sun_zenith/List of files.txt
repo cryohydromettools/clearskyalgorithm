@@ -1,0 +1,6 @@
+[1] formatchange.m
+[2] sun_azimuth_data.m
+[3] sun_position.m
+[4] validate.m
+[5] About the Script.doc
+[06] 08Jul2004Karachi.doc (Sample Output File)

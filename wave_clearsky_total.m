@@ -1,36 +1,43 @@
+%%  --------------  claer sky day algorithm  --------------  %%     
+
 clc
 clear all
 close all
 
-format long g;
-%--------------------------------
-dir_out     = 'output/';
-titulo_guv  = 'guv_total_2005';
-dir_graph   = 'graphics/'; 
+%%  --------------         dir work          --------------  %%     
 
-vars_1  = load('input/data_03_04_2018_17_04_2018.txt');
-vars_2  = load('input/data_18_04_2018_01_31_2020.txt');
+dir_out      = ['data/output/'];
+dir_graph    = ['graphics/']; 
+dir_in       = ['data/input/'];
+filename_in  = ['data_uv_340nm.txt'];
+%%  --------------  input year and location  --------------  %%     
 
-var_tot = [vars_1;vars_2];
-%%%%%%%% Arrays from data %%%%%%%%%%%%%%
+years_total = [2018,2019,2020];
+lon_s       = -75.30;
+lat_s       = -12.04;
+elv_s       = 3314.0;
+zone_s      = -5;
+%%  --------------        read data          --------------  %%     
+
+str_total_dat = [dir_in,filename_in];
+var_tot       = load(str_total_dat);
+
+%%%%%%%%%% Arrays from data %%%%%%%%%%%%%%
 year_input  = var_tot(:,1);
 month_input = var_tot(:,2);
 day_input   = var_tot(:,3);
 hour_input  = var_tot(:,4);
 min_input   = var_tot(:,5);
 seg_input   = var_tot(:,6);
-%%%%%%%%%% Irradiances final %%%%%%%%%%%%%
-irra_305 = var_tot(:,7);
-irra_320 = var_tot(:,8);
-irra_340 = var_tot(:,10);
-irra_380 = var_tot(:,11);
+%%%%%%%%%% Irradiance final %%%%%%%%%%%%%
+irra_340 = var_tot(:,7);
+
 %% %%%%%%%%%%% calculate zenith angle %%%%%%%%%%%%%%%%%%%%%
 for i = 1:length(year_input);
-%location for huancayo
-location.longitude = -75.30; 
-location.latitude = -12.04; 
-location.altitude = 3314.0;
-%cal = 1;
+%location for site
+location.longitude = lon_s; 
+location.latitude  = lat_s; 
+location.altitude  = elv_s;
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 time.year  = year_input(i);
 time.month = month_input(i);
@@ -38,7 +45,7 @@ time.day   = day_input(i);
 time.hour  = hour_input(i);
 time.min   = min_input(i);
 time.sec   = seg_input(i);
-time.UTC   = -5; 
+time.UTC   = zone_s; 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 sun = sun_position(time, location);
 zenith_input(i) = sun.zenith;
@@ -49,7 +56,6 @@ decimalyear = datenum([year_input,month_input,day_input,...
                        hour_input,min_input,seg_input]);
 hour_cont = hour_input' + min_input'./60.0 + seg_input'./3600;   
 
-years_total = [2018,2019,2020];
 days_month = [31,29,31,30,31,30,31,31,30,31,30,31];
 months = {'January','February','March','April','May','June',...
           'July','August','September','October','November',...
@@ -59,7 +65,7 @@ for k=1:length(years_total)
                    
  for i=1:length(days_month)
 
-  for j=1:days_month(i) %day
+  for j=1:days_month(i)
        
    index_day = find(year_input == years_total(k) & month_input == i & day_input == j);
    
@@ -73,15 +79,8 @@ for k=1:length(years_total)
       hour_day{k,i,j}  = hour_input(index_day);
       min_day{k,i,j}   = min_input(index_day);
       seg_day{k,i,j}   = seg_input(index_day);
-      
       hour_cont_day{k,i,j} = hour_cont(index_day);
-      %%%%%
-      irra_305_day{k,i,j}  = irra_305(index_day);
-      irra_320_day{k,i,j}  = irra_320(index_day);
       irra_340_day{k,i,j}  = irra_340(index_day);
-      irra_380_day{k,i,j}  = irra_380(index_day);
-      %%%
-  
   end
  end
 end
@@ -103,7 +102,6 @@ emited_LW_day_clear_min  = [];
 incide_LW_day_clear_min  = [];
 zenith_day_clear_min     = [];
       
-years_total = [2018,2019,2020];
 days_month = [31,29,31,30,31,30,31,31,30,31,30,31];
 months = {'January','February','March','April','May','June',...
           'July','August','September','October','November',...
