@@ -10,8 +10,8 @@ dir_out            = ['data/output/'];
 dir_graph          = ['graphics/']; 
 dir_in             = ['data/input/'];
 filename_in        = ['data_uv_340nm.txt'];
-filename_out       = ['data_uv_340nm_cs_d.txt'];
-filename_out_thres = ['firt_thres.txt'];
+filename_out       = ['data_uv_340nm_cs_days.txt'];
+filename_out_thres = ['first_thres.txt'];
 
 %%  --------------  input year and location  --------------  %%     
 
