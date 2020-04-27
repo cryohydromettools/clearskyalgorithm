@@ -1,7 +1,7 @@
 # Introduction
 clearskyalgorithm is an algorithm to select clear sky conditions from uv irradiance surface at 340 nm measured intervals of 1 minute.
 
-### ***1***. Wavelet transform method
+***1***. Wavelet transform method
 
 Wavelet method is based on the decomposition of UV radiation measured at 340 nm with 1 minute interval.
 The algorithm detects the spectral signatures of the clouds and the magnitude of the noise in the daily 
@@ -12,7 +12,7 @@ as a clear-sky condition, it is required that the determination coefficient be g
 the Root Mean Square Error (RMSE) less than 0.04 W m<sup>-2</sup> and the length measurement day be greater to 600. 
 Once this condition is satisfied, the wavelet method is applied.
 
-### ***1***. Normalized method
+***2***. Normalized method
 
 
 ## Contact
