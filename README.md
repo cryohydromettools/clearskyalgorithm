@@ -24,3 +24,12 @@ Jose Flores, jflores@igp.gob.pe
 
 Djafer, D., Irbah, A., and Zaiani, M. (2017). Identification of clear days from solar irradiance observations using 
 a new method based on the wavelet transform. Renewable Energy, 101, 347-355. https://doi.org/10.1016/J.RENENE.2016.08.038
+
+Long, C. N., y Ackerman, T. P. (2000). Identification of clear skies from broadband pyranometer measurements and 
+calculation of downwelling shortwave cloud effects. Journal of Geophysical Research: Atmospheres, 105(D12), 
+15609-15626. https://doi.org/10.1029/2000JD900077
+
+Suárez Salas, L. F., Flores Rojas, J. L., Pereira Filho, A. J., y Karam, H. A. (2017). Ultraviolet solar radiation 
+in the tropical central Andes (12.0°S). Photochemical & Photobiological Sciences, 16(6), 954-971. 
+https://doi.org/10.1039/C6PP00161K
+
