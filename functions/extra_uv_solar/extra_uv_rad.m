@@ -5,7 +5,7 @@ function [decl_rad,sunrise_h, sunset_h, day_dur_h,ecce, uv_top] = ...
 % constants
 
 clear global;
-conss_solar_uv = 0.7016;
+cons_solar_uv = 0.9552; % 1.0252
 %-------------------------------------------------------------------------------
 
 deg_rad = pi/180.0;
@@ -37,7 +37,7 @@ cos_z = cos(zenith_ang*deg_rad);
   uv_top = 0.;
 else
 % day
-  uv_top = -conss_solar_uv.*ecce.*cos_z;
+  uv_top = cons_solar_uv.*ecce.*cos_z;
 end
 %-------------------------------------------------------------------------------
 return;
