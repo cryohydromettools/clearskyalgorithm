@@ -20,7 +20,7 @@ Once this condition is satisfied, the wavelet method is applied.
 Christian Torres, christian1994@furg.br <br>
 Jose Flores, jflores@igp.gob.pe
 
-# Reference
+# References
 
-Djafer, D., Irbah, A., y Zaiani, M. (2017). Identification of clear days from solar irradiance observations using 
+Djafer, D., Irbah, A., and Zaiani, M. (2017). Identification of clear days from solar irradiance observations using 
 a new method based on the wavelet transform. Renewable Energy, 101, 347-355. https://doi.org/10.1016/J.RENENE.2016.08.038
