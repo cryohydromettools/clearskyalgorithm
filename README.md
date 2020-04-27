@@ -3,9 +3,9 @@ clearskyalgorithm is an algorithm to select clear sky conditions from uv irradia
 
 ### Wavelet transform method
 
-The wavelet method is based on the decomposition of UV radiation measured at 340 nm with 1 minute interval.
+Wavelet method is based on the decomposition of UV radiation measured at 340 nm with 1 minute interval.
 The algorithm detects the spectral signatures of the clouds and the magnitude of the noise in the daily 
-UV irradiance, similar approach to 2017. The decision whether or not we have a clear day is taken from 
+UV irradiance, similar approach to Djafer et al. (2017). The decision whether or not we have a clear day is taken from 
 the analysis of the decomposition by analyzing some criteria. Firstly, a Gaussian adjustment curve is 
 generated from the UV irradiance data for each measurement day. As a condition for a day to be selected 
 as a clear-sky condition, it is required that the determination coefficient be greater than or equal to 0.982, 
@@ -16,5 +16,11 @@ Once this condition is satisfied, the wavelet method is applied.
 
 
 ## Contact
-Jose Flores, jflores@igp.gob.pe
+
 Christian Torres, christian1994@furg.br <br>
+Jose Flores, jflores@igp.gob.pe
+
+# Reference
+
+Djafer, D., Irbah, A., y Zaiani, M. (2017). Identification of clear days from solar irradiance observations using 
+a new method based on the wavelet transform. Renewable Energy, 101, 347-355. https://doi.org/10.1016/J.RENENE.2016.08.038
