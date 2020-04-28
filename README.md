@@ -54,6 +54,27 @@ The function uses input an array of data structures and assembles it into one.
 data than desired. The function uses input a data structure and the start and end times 
 that interest and throws a new structure with the indicated period.
 
+## Structure
+
+**wavelet_transform_method**
+
+```Matlab
+
+    dir work section
+	
+	dir_out            = dir output
+	dir_graph          = dir graphics 
+	dir_in             = dir input
+	filename_in        = file name
+	filename_out       = file output name wavelet transform method 
+	filename_out_thres = file output name threshold for normalized method
+ 
+```
+
+## Examples
+
+
+
 # References
 
 Djafer, D., Irbah, A., and Zaiani, M. (2017). Identification of clear days from solar irradiance observations using 
