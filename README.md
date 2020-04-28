@@ -25,6 +25,20 @@ Global irradiance by Long and Ackerman (2000) and UV irradiance by Suárez Salas
 Christian Torres, christian1994@furg.br <br>
 Jose Flores, jflores@igp.gob.pe
 
+## Scrips
+
+**wavelet_clear_sky_days** - The function reads the time and date of sampling (MATLAB time [days since year 0]), 
+rainfall intensity (mm / h), reflectivity (dBZ), synoptic codes SYNOP 4680 and 4677 
+(see PARSIVEL2 manual), drop concentration (log [1 / m mm]), velocities (m / s), 
+and raw data of sizes versus velocity (1).
+
+**select_clear_sky_min_total** - The following function is useful for combining the information of several files into a single structure.
+The function uses input an array of data structures and assembles it into one.
+
+**clear_sky_days_plot** - The following script is for cutting structures that have more 
+data than desired. The function uses input a data structure and the start and end times 
+that interest and throws a new structure with the indicated period.
+
 # References
 
 Djafer, D., Irbah, A., and Zaiani, M. (2017). Identification of clear days from solar irradiance observations using 
