@@ -1,9 +1,11 @@
 # Introduction
-clearskyalgorithm is an algorithm to select clear sky conditions from uv irradiance surface at 340 nm measured intervals of 1 minute.
+
+Matlab toolbox to select clear sky conditions from uv irradiance surface at 340 nm measured intervals of 1 minute.
+We describe two methods to identify clear sky days.
 
 ***1***. Wavelet transform method
 
-Wavelet method is based on the decomposition of UV radiation measured at 340 nm with 1 minute interval.
+Wavelet method is based on the decomposition of UV irradiance measured at 340 nm with 1 minute interval.
 The algorithm detects the spectral signatures of the clouds and the magnitude of the noise in the daily 
 UV irradiance, similar approach to Djafer et al. (2017). The decision whether or not we have a clear day is taken from 
 the analysis of the decomposition by analyzing some criteria. Firstly, a Gaussian adjustment curve is 
@@ -14,6 +16,9 @@ Once this condition is satisfied, the wavelet method is applied.
 
 ***2***. Normalized method
 
+Normalized method is based on the calculation of normalized UV irradiance measured at 340 nm with 1 minute interval, 
+as power law function of the cosine of the solar senith angle (SZA). This method was used to identify celar sky 
+Global irradiance by Long and Ackerman (2000) and UV irradiance by Suárez Salas et al. (2017).  
 
 ## Contact
 
