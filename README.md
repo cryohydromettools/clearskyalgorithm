@@ -5,8 +5,8 @@ measured intervals of 1 minute. We describe two methods to identify clear sky da
 
 ***1***. **Wavelet transform method**
 
-The algorithm detects the spectral signatures of the clouds and the magnitude of the noise in the daily.  
-Wavelet method is based on the decomposition of the UV irradiance measured at 340 nm with 1 minute interval. 
+The algorithm detects the spectral signatures of the clouds and the magnitude of the noise in the daily. Wavelet 
+method is based on the decomposition of the UV irradiance measured at 340 nm with 1 minute interval. 
 This method is based a similar approach to Djafer et al. (2017). The decision if we have or not a clear day 
 is taken from the decomposition analysis considering some criterios. Firstly, a Gaussian adjustment curve 
 is generated from the UV irradiance data for each measurement day. In our case, e.g., as a condition for a 
