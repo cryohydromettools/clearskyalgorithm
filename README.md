@@ -1,6 +1,6 @@
 # Introduction
 
-Clearskyatoolbox is a tool in Matlab to select clear sky conditions from uv irradiance surface at 340 nm 
+Clearskyatool is a tool in Matlab to select clear sky conditions from uv irradiance surface at 340 nm 
 measured intervals of 1 minute. We describe two methods to identify clear sky days.
 
 ***1***. **Wavelet transform method**
