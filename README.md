@@ -3,7 +3,7 @@
 Matlab toolbox to select clear sky conditions from uv irradiance surface at 340 nm measured intervals of 1 minute.
 We describe two methods to identify clear sky days.
 
-***1***. Wavelet transform method
+***1***. **Wavelet transform method**
 
 Wavelet method is based on the decomposition of UV irradiance measured at 340 nm with 1 minute interval.
 The algorithm detects the spectral signatures of the clouds and the magnitude of the noise in the daily 
@@ -14,7 +14,7 @@ as a clear-sky condition, it is required that the determination coefficient be g
 the Root Mean Square Error (RMSE) less than 0.04 W m<sup>-2</sup> and the length measurement day be greater to 600. 
 Once this condition is satisfied, the wavelet method is applied.
 
-***2***. Normalized method
+***2***. **Normalized method**
 
 Normalized method is based on the calculation of normalized UV irradiance measured at 340 nm with 1 minute interval, 
 as power law function of the cosine of the solar senith angle (SZA). This method was used to identify celar sky 
