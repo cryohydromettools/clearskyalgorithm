@@ -25,7 +25,7 @@ Global irradiance by Long and Ackerman (2000) and UV irradiance by Suárez Salas
 Christian Torres, christian1994@furg.br <br>
 Jose Flores, jflores@igp.gob.pe
 
-## Scrips
+## Scripts
 
 **wavelet_clear_sky_days** - The function reads the time and date of sampling (MATLAB time [days since year 0]), 
 rainfall intensity (mm / h), reflectivity (dBZ), synoptic codes SYNOP 4680 and 4677 
