@@ -65,7 +65,7 @@ that interest and throws a new structure with the indicated period.
 	dir_out            = dir output
 	dir_graph          = dir graphics 
 	dir_in             = dir input
-	filename_in        = file name
+	filename_in        = file name data set
 	filename_out       = file output name wavelet transform method 
 	filename_out_thres = file output name threshold for normalized method
     
