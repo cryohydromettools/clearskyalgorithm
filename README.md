@@ -26,7 +26,7 @@ coefficients, which are representative of the entire irradiance dataset, lies in
 it can be proposed initial coefficients take from the scientific literature or found clear sky day using wavelet 
 transform method. In our case, e.g., for first iteration, these initial coefficients were obtained from the 
 scientific literature (e.g., Suárez Salas et al., 2017), bcoef equal to 1.30, sup_lim equal to 0.82 
-W m<sup>-2</sup>, inf_lim01 equal to 0.62 W m<sup>-2</sup> and inf_lim02 0.58 W m<sup>-2</sup>. After the 
+W m<sup>-2</sup>, inf_lim01 equal to 0.62 W m<sup>-2</sup> and inf_lim02 to 0.58 W m<sup>-2</sup>. After the 
 first iteration, the algorithm uses the results from fitting the previosly detected clear sky measurements, 
 and succeeding iterations refine the process to the actual characteristics of the themselves.
 The final values for the coefficients are obtained after the automation process.    
