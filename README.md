@@ -72,7 +72,7 @@ that interest and throws a new structure with the indicated period.
     input years and location section
 	
 	years_total = years work e.g. [2018,2019,2020]
-    lon_s       = logitude   e.g. [-75.30]
+       lon_s       = logitude   e.g. [-75.30]
 	lat_s       = latiude    e.g. [-12.04]
 	elv_s       = elevation  e.g. [3314.0]
 	zone_s      = zone       e.g. [-5]
