@@ -29,8 +29,7 @@ Jose Flores, jflores@igp.gob.pe
 
 **wavelet_clear_sky_days** - The function reads the time and date of sampling (MATLAB time [days since year 0]), 
 rainfall intensity (mm / h), reflectivity (dBZ), synoptic codes SYNOP 4680 and 4677 
-(see PARSIVEL2 manual), drop concentration (log [1 / m mm]), velocities (m / s), 
-and raw data of sizes versus velocity (1).
+(see PARSIVEL2 manual), drop concentration (log [1 / m mm]),and raw data of sizes versus velocity (1).
 
 **select_clear_sky_min_total** - The following function is useful for combining the information of several files into a single structure.
 The function uses input an array of data structures and assembles it into one.
