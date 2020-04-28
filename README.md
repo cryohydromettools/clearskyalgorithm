@@ -11,7 +11,7 @@ This method is based a similar approach to Djafer et al. (2017). The decision if
 is taken from the decomposition analysis considering some criterios. Firstly, a Gaussian adjustment curve 
 is generated from the UV irradiance data for each measurement day. In our case, e.g., as a condition for a 
 day to be selected as a clear sky condition, it is required that the determination coefficient (rsquare_in) be 
-greater than or equal to 0.982, the Root Mean Square Error (rsquare_in) less than 0.025 W m<sup>-2</sup> and 
+greater than or equal to 0.982, the Root Mean Square Error (rmse_in) less than 0.025 W m<sup>-2</sup> and 
 the measurements per day (len_in) greater than 600 minute measurements per day. Once these conditions are 
 satisfied, the wavelet transform method is applied to identify measurements influenced by clouds.
 
@@ -29,9 +29,14 @@ scientific literature (e.g., Suárez Salas et al., 2017), bcoef equal to 1.30, s
 W m<sup>-2</sup>, inf_lim01 equal to 0.62 W m<sup>-2</sup> and inf_lim02 0.58 W m<sup>-2</sup>. After the 
 first iteration, the algorithm uses the results from fitting the previosly detected clear sky measurements, 
 and succeeding iterations refine the process to the actual characteristics of the themselves.
-The final values for the coefficients obtained after the automation process.    
+The final values for the coefficients are obtained after the automation process.    
 
-# Contact
+Both methods identify clear sky days from UV irradiance measured at 340 nm with one minute interval. In addition, 
+normalized method can identify short periods by day and its process for find the a and b coefficients is 
+automatic. In contrast, wavelet method only identifies completely clear days and the process for find 
+rsquare_in and rmse_in coefficients is manual.
+
+### Contact
 
 Christian Torres, christian1994@furg.br <br>
 Jose Flores, jflores@igp.gob.pe
