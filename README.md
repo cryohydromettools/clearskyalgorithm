@@ -67,16 +67,22 @@ that interest and throws a new structure with the indicated period.
 	dir_in             = dir input
 	filename_in        = file name data set
 	filename_out       = file output name wavelet transform method 
-	filename_out_thres = file output name threshold for normalized method
+	filename_out_thres = file output name threshold normalized method
     
     input years and location section
 	
 	years_total = years work e.g. [2018,2019,2020]
-       lon_s       = logitude   e.g. [-75.30]
+		lon_s       = logitude   e.g. [-75.30]
 	lat_s       = latiude    e.g. [-12.04]
 	elv_s       = elevation  e.g. [3314.0]
 	zone_s      = zone       e.g. [-5]
-	
+
+    conditions select day  section    
+
+	rsquare_in = determination coefficient e.g. [0.982]
+	rmse_in    = Root Mean Square Error    e.g. [0.025]
+	len_in     = the measurements per day  e.g. [600]
+
 	
 ```
 
