@@ -1,13 +1,13 @@
 # Introduction
 
 Clearskytool is a tool in Matlab to select clear sky conditions from UV irradiance surface at 340 nm 
-measured intervals of one minute. We describe two methods to identify clear sky days.
+measured intervals of one-minute. We describe two methods to identify clear sky days.
 
 ***1***. **Wavelet transform method**
 
 The algorithm detects the spectral signatures of the clouds and the magnitude of the noise in the daily. Wavelet 
-method is based on the decomposition of the UV irradiance measured at 340 nm with 1 minute interval. 
-This method is based a similar approach to Djafer et al. (2017). The decision if we have or not a clear day 
+method is based on the decomposition of the UV irradiance measured at 340 nm with one-minute interval. 
+This method is based a similar approach to Djafer et al. (2017). The decision if we have or not a clear sky day 
 is taken from the decomposition analysis considering some criterios. Firstly, a Gaussian adjustment curve 
 is generated from the UV irradiance data for each measurement day. In our case, e.g., as a condition for a 
 day to be selected as a clear sky condition, it is required that the determination coefficient (rsquare_in) be 
@@ -17,7 +17,7 @@ satisfied, the wavelet transform method is applied to identify measurements infl
 
 ***2***. **Normalized method**
 
-Normalized method is based on the calculation of normalized UV irradiance measured at 340 nm with one minute 
+Normalized method is based on the calculation of normalized UV irradiance measured at 340 nm with one-minute 
 interval, using the power law equation of the cosine of the solar zenith angle (SZA). This method was used to 
 identify clear sky Global irradiance by Long and Ackerman (2000) and UV irradiance by Suárez Salas et al. (2017).
 The power law equation depending a and b regression coefficients. The a coefficient determine maximum (sup_lim) 
@@ -31,7 +31,7 @@ first iteration, the algorithm uses the results from fitting the previosly detec
 and succeeding iterations refine the process to the actual characteristics of the themselves.
 The final values for the coefficients are obtained after the automation process.    
 
-Both methods identify clear sky days from UV irradiance measured at 340 nm with one minute interval. In addition, 
+Both methods identify clear sky days from UV irradiance measured at 340 nm with one-minute interval. In addition, 
 normalized method can identify short periods by day and its process for find the a and b coefficients is 
 automatic. In contrast, wavelet method only identifies completely clear days and the process for find 
 rsquare_in and rmse_in coefficients is manual.
@@ -151,19 +151,25 @@ normalized methods. In addition, it identifies the days that overlap between the
 
 |C|Variable name|Short Name|Unit|
 |---|---|---|---|
-|C1| Year | year |  |
-|C2| Month | month |  |
-|C3| Day | day |  |
-|C4| Hour | hour |  |
-|C5| Minute | min |  |
-|C6| Second| sec | |
+|C1| Year | year | - |
+|C2| Month | month | - |
+|C3| Day | day | - |
+|C4| Hour | hour | - |
+|C5| Minute | min | - |
+|C6| Second| sec | - |
 |C7| Irradiance at 305 | irra_305 | W m<sup>-2</sup> nm<sup>-1</sup> |
 |C8| Irradiance at 320 | irra_320 | W m<sup>-2</sup> nm<sup>-1</sup> |
 |C9| Irradiance at 340 | irra_340 | W m<sup>-2</sup> nm<sup>-1</sup> |
 |C10| Irradiance at 380 | irra_380 | W m<sup>-2</sup> nm<sup>-1</sup> |
-|C11| Erythemal dose maximum | dose_max |  |
-|C12| Erythemal dose mean | dose_mean |  |
-|C13| Erythemal dose minimum | dose_min |  |
+|C11| Erythemal dose maximum | dose_max | - |
+|C12| Erythemal dose mean | dose_mean | - |
+|C13| Erythemal dose minimum | dose_min | - |
+
+**Changes dir work, year and locate, and condition select selctions** 
+
+
+**Results**
+
 
 # References
 
