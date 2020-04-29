@@ -146,8 +146,13 @@ normalized methods. In addition, it identifies the days that overlap between the
 
 ## Examples
 
+To test the two methods, we used a data set UV irradiance collected one-minute intervals at the Observatory 
+of Huancayo, localized in the central Andes of Peru. UV irradiance was measured a GUV-511 multi-channel filter 
+radiometer manufactured by Biospherical Instruments Inc., San Diego, California. The radiometer has four channels 
+in the UV region, centered at 305, 320, 340, and 380 nm. Data are available from April 2018 to January 2020 with 
+some periods of inactivity. In the following table is showed header of the file guv_data_all_f.txt.
 
-**head data file guv_data_all_f.txt** 
+**header data file guv_data_all_f.txt** 
 
 |C|Variable name|Short Name|Unit|
 |---|---|---|---|
