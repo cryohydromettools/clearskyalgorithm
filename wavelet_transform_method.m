@@ -15,6 +15,11 @@
 % measurements per day. Once these conditions are satisfied, the wavelet
 % transform method is applied to identify measurements influenced by clouds.
 %
+% Core developer team:
+%
+%   * Christian Torres 
+%   * Jose Flores
+%
 %%%%%%%%%%  Input parameters: %%%%%%%%%%%
 %%%%%%%%%%%    dir work section   %%%%%%%%%%%
 %	
@@ -57,9 +62,9 @@ close all
 
 %%  --------------         dir work          --------------  %%     
 
-dir_out            = ['output/'];
+dir_out            = ['data/output/'];
 dir_graph          = ['graphics/']; 
-dir_in             = ['input/'];
+dir_in             = ['data/input/'];
 filename_in        = ['guv_data_all_f.txt'];
 filename_out       = ['cs_data_uv_min_days_met1.txt'];
 filename_out_thres = ['first_thres.txt'];

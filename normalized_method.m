@@ -22,6 +22,11 @@
 % themselves. The final values for the coefficients are obtained after 
 % the automation process.    
 %
+% Core developer team:
+%
+%   * Christian Torres 
+%   * Jose Flores
+%
 %%%%%%%%%%  Input parameters: %%%%%%%%%%%
 %%%%%%%%%%%    dir work section   %%%%%%%%%%%
 %	
@@ -69,9 +74,9 @@ close all
 
 %%  --------------         dir work          --------------  %%     
 
-dir_out            = ['output/'];
+dir_out            = ['data/output/'];
 dir_graph          = ['graphics/']; 
-dir_in             = ['input/'];
+dir_in             = ['data/input/'];
 filename_in        = ['guv_data_all_f.txt'];
 filename_out       = ['cs_data_uv_min_met2.txt'];
 
