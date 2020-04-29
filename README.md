@@ -62,12 +62,12 @@ that interest and throws a new structure with the indicated period.
 
     dir work section
 	
-	dir_out            = dir output
-	dir_graph          = dir graphics 
-	dir_in             = dir input
-	filename_in        = file name data set
-	filename_out       = file output name wavelet transform method 
-	filename_out_thres = file output name threshold normalized method
+	dir_out            = dir output     e.g. ['data/output/']
+	dir_graph          = dir graphics   e.g. ['graphics/'];
+	dir_in             = dir input      e.g. ['data/input/']
+	filename_in        = file name data set   e.g. ['guv_data_all_f.txt'];
+	filename_out       = file output name days wavelet transform method e.g. ['cs_data_uv_min_days_met1.txt']
+	filename_out_thres = file output name threshold normalized method   e.g. ['threshold_in_met2.txt']
     
     input years and location section
 	
@@ -92,11 +92,11 @@ that interest and throws a new structure with the indicated period.
 
     dir work section
 	
-	dir_out            = dir output
-	dir_graph          = dir graphics 
-	dir_in             = dir input
-	filename_in        = file name data set
-	filename_out       = file output name normalized method 
+	dir_out            = dir output     e.g. ['data/output/']
+	dir_graph          = dir graphics   e.g. ['graphics/'];
+	dir_in             = dir input      e.g. ['data/input/']
+	filename_in        = file name data set   e.g. ['guv_data_all_f.txt'];
+	filename_out       = file output name min normalized method   e.g. ['cs_data_uv_min_met2.txt']
     
     input years and location section
 	
@@ -113,6 +113,34 @@ that interest and throws a new structure with the indicated period.
 	inf_lim01   = threshold min < 78.5° SZA e.g. [0.62] 
 	inf_lim02   = threshold min > 78.5° SZA e.g. [0.58]
 
+	
+```
+
+**plot_clear_sky_days**
+
+```Matlab
+
+    dir work section
+	
+	dir_out            = dir output     e.g. ['data/output/']
+	dir_graph          = dir graphics   e.g. ['graphics/']
+	dir_in             = dir input      e.g. ['data/input/']
+	filename_in        = file name data set   e.g. ['guv_data_all_f.txt']
+	filename_in1       = file output name days wavelet transform method   e.g. ['cs_data_uv_min_days_met1.txt']
+	filename_in2       = file output name min normalized method   e.g. ['cs_data_uv_min_met2.txt']
+    filename_out       = file output name days normalized method  e.g. ['cs_data_uv_min_days_met2.txt']
+    
+    input years and location section
+	
+	years_total = years work e.g. [2018,2019,2020]
+	lon_s       = logitude   e.g. [-75.30]
+	lat_s       = latiude    e.g. [-12.04]
+	elv_s       = elevation  e.g. [3314.0]
+	zone_s      = zone UTC   e.g. [-5]
+
+    conditions select short period  section    
+
+	len_in     = the measurements per day  e.g. [600]
 	
 ```
 
