@@ -43,16 +43,16 @@ Jose Flores, jflores@igp.gob.pe
 
 # Scripts
 
-**wavelet_transform_method** - The function reads the time and date of sampling (MATLAB time [days since year 0]), 
-rainfall intensity (mm / h), reflectivity (dBZ), synoptic codes SYNOP 4680 and 4677 
-(see PARSIVEL2 manual), drop concentration (log [1 / m mm]),and raw data of sizes versus velocity (1).
+**wavelet_transform_method** - The following code, it read data set contain in file of name e.g. guv_data_all_f.txt 
+and identify clear sky days using wavelet transform method. In addition, it generate plots of the select days. 
+Finally, it save a file of name e.g cs_data_uv_min_days_met1.txt, which contain only data clear sky days select.  
 
-**normalized_method** - The following function is useful for combining the information of several files into a single structure.
-The function uses input an array of data structures and assembles it into one.
+**normalized_method** - The following code, it read data set contain in file of name e.g. guv_data_all_f.txt and 
+identify clear sky conditions using normalized method. Finally, it save a file of name e.g 
+cs_data_uv_min_met2.txt, which contain all data fitting to clear sky coefficients.
 
-**plot_clear_sky_days** - The following script is for cutting structures that have more 
-data than desired. The function uses input a data structure and the start and end times 
-that interest and throws a new structure with the indicated period.
+**plot_clear_sky_days** - The following script plot clear sky days identifies by wavelet transform and 
+normalized methods. In addition, it identifies the days that overlap between the two methods.
 
 ## Structure
 
@@ -128,7 +128,7 @@ that interest and throws a new structure with the indicated period.
 	filename_in        = file name data set   e.g. ['guv_data_all_f.txt']
 	filename_in1       = file output name days wavelet transform method   e.g. ['cs_data_uv_min_days_met1.txt']
 	filename_in2       = file output name min normalized method   e.g. ['cs_data_uv_min_met2.txt']
-    filename_out       = file output name days normalized method  e.g. ['cs_data_uv_min_days_met2.txt']
+	filename_out       = file output name days normalized method  e.g. ['cs_data_uv_min_days_met2.txt']
     
     input years and location section
 	
