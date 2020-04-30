@@ -40,7 +40,7 @@ rsquare_in and rmse_in coefficients is manual.
 ### Contact
 
 Christian Torres, christian1994@furg.br <br>
-Jose Flores, jflores@igp.gob.pe
+Jose Flores, jflores@igp.gob.pe <br>
 Luis Suarez  lsuarez@igp.gob.pe
 
 # Scripts
