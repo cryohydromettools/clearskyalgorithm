@@ -11,8 +11,8 @@ This method is based a similar approach to Djafer et al. (2017). The decision if
 is taken from the decomposition analysis considering some criterios. Firstly, a Gaussian adjustment curve 
 is generated from the UV irradiance data for each measurement day. In our case, e.g., as a condition for a 
 day to be selected as a clear sky condition, it is required that the determination coefficient (rsquare_in) be 
-greater than or equal to 0.982, the Root Mean Square Error (rmse_in) less than 0.025 W m<sup>-2</sup> and 
-the measurements per day (len_in) greater than 600 minute measurements per day. Once these conditions are 
+greater than or equal to 0.982, the Root Mean Square Error (rmse_in) less than 0.025 W m<sup>-2</sup> nm<sup>-1</sup> 
+and the measurements per day (len_in) greater than 600 minute measurements per day. Once these conditions are 
 satisfied, the wavelet transform method is applied to identify measurements influenced by clouds.
 
 ***2***. **Normalized method**
@@ -26,8 +26,9 @@ coefficients, which are representative of the entire irradiance dataset, lies in
 it can be proposed initial coefficients take from the scientific literature or found clear sky day using wavelet 
 transform method. In our case, e.g., for first iteration, these initial coefficients were obtained from the 
 scientific literature (e.g., Suárez Salas et al., 2017), bcoef equal to 1.30, sup_lim equal to 0.82 
-W m<sup>-2</sup>, inf_lim01 equal to 0.62 W m<sup>-2</sup> and inf_lim02 to 0.58 W m<sup>-2</sup>. After the 
-first iteration, the algorithm uses the results from fitting the previosly detected clear sky measurements, 
+W m<sup>-2</sup> nm<sup>-1</sup>, inf_lim01 equal to 0.62 W m<sup>-2</sup> nm<sup>-1</sup> and 
+inf_lim02 to 0.58 W m<sup>-2</sup> nm<sup>-1</sup>. After the first iteration, the algorithm uses the 
+results from fitting the previosly detected clear sky measurements, 
 and succeeding iterations refine the process to the actual characteristics of the themselves.
 The final values for the coefficients are obtained after the automation process.    
 
@@ -172,9 +173,107 @@ some periods of inactivity. In the following table is showed header of the file 
 
 **Changes dir work, year and locate, and condition select selctions** 
 
+The main changes should be made in the dir work, year and locate, and condition select sections. For example, 
+for our data set and location:
+
+**wavelet_transform_method**
+
+```Matlab
+
+    dir work section
+	
+	dir_out            = ['data/output/']
+	dir_graph          = ['graphics/'];
+	dir_in             = ['data/input/']
+	filename_in        = ['guv_data_all_f.txt'];
+	filename_out       = ['cs_data_uv_min_days_met1.txt']
+	filename_out_thres = ['threshold_in_met2.txt']
+    
+    input years and location section
+	
+	years_total = [2018,2019,2020]
+	lon_s       = [-75.30]
+	lat_s       = [-12.04]
+	elv_s       = [3314.0]
+	zone_s      = [-5]
+
+    conditions select day  section    
+
+	rsquare_in = [0.982]
+	rmse_in    = [0.025]
+	len_in     = [600]
+
+	
+```
+
+**normalized_method**
+
+```Matlab
+
+    dir work section
+	
+	dir_out            = ['data/output/']
+	dir_graph          = ['graphics/'];
+	dir_in             = ['data/input/']
+	filename_in        = ['guv_data_all_f.txt'];
+	filename_out       = ['cs_data_uv_min_met2.txt']
+    
+    input years and location section
+	
+	years_total = [2018,2019,2020]
+	lon_s       = [-75.30]
+	lat_s       = [-12.04]
+	elv_s       = [3314.0]
+	zone_s      = [-5]
+
+    conditions select short period  section    
+
+	bcoef       = [1.30]
+	sup_lim     = [0.82]
+	inf_lim01   = [0.62] 
+	inf_lim02   = [0.58]
+
+	
+```
+
+**plot_clear_sky_days**
+
+```Matlab
+
+    dir work section
+	
+	dir_out            = ['data/output/']
+	dir_graph          = ['graphics/']
+	dir_in             = ['data/input/']
+	filename_in        = ['guv_data_all_f.txt']
+	filename_in1       = ['cs_data_uv_min_days_met1.txt']
+	filename_in2       = ['cs_data_uv_min_met2.txt']
+	filename_out       = ['cs_data_uv_min_days_met2.txt']
+    
+    input years and location section
+	
+	years_total = [2018,2019,2020]
+	lon_s       = [-75.30]
+	lat_s       = [-12.04]
+	elv_s       = [3314.0]
+	zone_s      = [-5]
+
+    conditions select short period  section    
+
+	len_in     = [600]
+	
+```
+After the previous settings run wavelet_transform_method.mat, normalized_method.met and plot_clear_sky_days.mat
 
 **Results**
 
+Figure graphics\select_days_mets.png shows the clear sky days identified by both methods. The wavelet method 
+identified 48 days of clear sky (graphics\select_days_mets.png a).  While the normalization method identified 
+53 days (graphics\select_days_mets.png a). 33 days overlapped between the two methods.
+
+The final values for the coefficients of the normalized method, obtained after the automatic process, are 1.44
+for the coefficient b and 0.68 W m<sup>-2</sup> nm<sup>-1</sup> for the coefficient a, with a good level of 
+accuracy (fitted line with R<sup>2</sup> = 0.994) (graphics\regression_global_cosz.jpg). 
 
 # References
 
