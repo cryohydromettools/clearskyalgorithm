@@ -10,8 +10,8 @@
 %
 %   * Christian Torres 
 %   * Jose Flores
+%   * Luis Suarez
 %
-
 %%%%%%%%%%  Input parameters: %%%%%%%%%%%
 %%%%%%%%%%%    dir work section   %%%%%%%%%%%
 %	

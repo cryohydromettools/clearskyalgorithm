@@ -41,6 +41,7 @@ rsquare_in and rmse_in coefficients is manual.
 
 Christian Torres, christian1994@furg.br <br>
 Jose Flores, jflores@igp.gob.pe
+Luis Suarez  lsuarez@igp.gob.pe
 
 # Scripts
 
@@ -269,7 +270,7 @@ After the previous settings run wavelet_transform_method.mat, normalized_method.
 
 Figure graphics\select_days_mets.png shows the clear sky days identified by both methods. The wavelet method 
 identified 48 days of clear sky (graphics\select_days_mets.png a).  While the normalization method identified 
-53 days (graphics\select_days_mets.png a). 33 days overlapped between the two methods.
+53 days (graphics\select_days_mets.png a). In total 33 days overlapped between the two methods.
 
 The final values for the coefficients of the normalized method, obtained after the automatic process, are 1.44
 for the coefficient b and 0.68 W m<sup>-2</sup> nm<sup>-1</sup> for the coefficient a, with a good level of 
